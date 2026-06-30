@@ -491,9 +491,12 @@ const BRACKET = {
   ],
 	
 	
-  final: [
+  third: [
 	  { home:"RU101",      away:"RU102", homeScore:null, awayScore:null, homeWin:null },
-	  
+  ],
+	
+	
+  final: [	  
 	  { home:"W101",      away:"W102", homeScore:null, awayScore:null, homeWin:null },
   ],
 };
@@ -699,8 +702,8 @@ function renderStandings() {
 // ════════════════════════════════════════════════
 // RENDER — BRACKET
 // ════════════════════════════════════════════════
-const STAGE_LABELS = { r32:'Round of 32', r16:'Round of 16', qf:'Quarter-finals', sf:'Semi-finals', final:'Final' };
-
+const STAGE_LABELS = { r32:'Round of 32', r16:'Round of 16', qf:'Quarter-finals', sf:'Semi-finals', third:'3rd Place Play-off', final:'Final' };
+ 
 function bracketTeamHTML(name, score, isWinner) {
   const p = FULL_DRAW[name] || "";
   const pending = !name || name === "TBC";
@@ -715,7 +718,7 @@ function bracketTeamHTML(name, score, isWinner) {
       <div class="b-score">${score !== null && score !== undefined ? score : ''}</div>
     </div>`;
 }
-
+ 
 function renderBracket() {
   const el = document.getElementById("bracketContent");
   const hasAny = Object.values(BRACKET).some(s => s.length > 0);
@@ -723,19 +726,29 @@ function renderBracket() {
     el.innerHTML = `<p style="color:var(--muted);margin-top:1rem;font-size:0.9rem;">The knockout bracket will appear here once the group stage is complete.</p>`;
     return;
   }
-
+ 
   // Only render columns up to the furthest round that has matches
   const order = ['r32', 'r16', 'qf', 'sf', 'final'];
   const lastIndex = order.reduce((acc, key, i) => BRACKET[key].length ? i : acc, 0);
   const cols = order.slice(0, lastIndex + 1);
-
+  // 3rd place play-off only appears once we've reached the semi-finals column
+  const showThird = lastIndex >= order.indexOf('sf');
+ 
   el.innerHTML = cols.map(key => {
     const matches = BRACKET[key];
     // Pad future rounds with TBC placeholders sized to match bracket progression
     const expectedCount = Math.max(matches.length, Math.ceil((BRACKET[order[order.indexOf(key) - 1]]?.length || matches.length * 2) / 2));
     const slots = matches.length ? matches : Array.from({ length: expectedCount }, () => ({ home: null, away: null, homeScore: null, awayScore: null }));
-
-    return `
+ 
+    // After the Semi-finals column, slot in the 3rd Place Play-off as its own column
+    const extraCol = (key === 'sf' && showThird) ? renderBracketColumn('third', BRACKET.third.length ? BRACKET.third : [{ home:null, away:null, homeScore:null, awayScore:null }]) : '';
+ 
+    return renderBracketColumn(key, slots) + extraCol;
+  }).join('');
+}
+ 
+function renderBracketColumn(key, slots) {
+  return `
       <div class="bracket-col">
         <div class="bracket-col-title">${STAGE_LABELS[key]}</div>
         ${slots.map(m => {
@@ -750,7 +763,6 @@ function renderBracket() {
           </div>`;
         }).join('')}
       </div>`;
-  }).join('');
 }
 
 // ════════════════════════════════════════════════
