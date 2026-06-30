@@ -58,6 +58,7 @@
   .score { font-size: 1.1rem; font-weight: 600; color: var(--text); letter-spacing: 1px; }
   .vs { color: var(--muted); font-size: 0.8rem; }
   .fixture-meta { font-size: 0.68rem; color: var(--muted); text-align: center; line-height: 1.4; }
+  .match-note { font-size: 0.65rem; color: var(--green); font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; margin-top: 1px; }
 
   /* Standings */
   .standings-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem; }
@@ -95,18 +96,28 @@
   .participant-card.knocked-out .person { color: var(--muted); }
   .ko-badge { font-size: 0.65rem; color: #b94040; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
 
-  /* Bracket */
-  .bracket-stage-title { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--green); margin: 1.4rem 0 0.6rem; padding: 5px 10px; background: var(--green-light); border-radius: 5px; }
-  .bracket-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; margin-bottom: 0.5rem; }
-  .bracket-fixture { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-  .bracket-team { display: flex; align-items: center; gap: 10px; padding: 9px 12px; }
+  /* Bracket — true tournament tree, horizontally scrollable */
+  .bracket-scroll { overflow-x: auto; padding-bottom: 1rem; -webkit-overflow-scrolling: touch; }
+  .bracket-tree { display: flex; gap: 28px; min-width: max-content; padding: 4px 4px 1rem; }
+  .bracket-col { display: flex; flex-direction: column; justify-content: space-around; min-width: 220px; }
+  .bracket-col-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--green); text-align: center; margin-bottom: 0.6rem; }
+  .bracket-slot { display: flex; align-items: center; flex: 1; }
+  .bracket-fixture { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; width: 100%; position: relative; }
+  .bracket-team { display: flex; align-items: center; gap: 8px; padding: 8px 10px; }
   .bracket-team:first-child { border-bottom: 1px solid var(--border); }
-  .bracket-team .b-name { font-weight: 500; font-size: 0.88rem; flex: 1; }
-  .bracket-team .b-score { font-weight: 700; font-size: 0.95rem; color: var(--text); min-width: 20px; text-align: right; }
-  .bracket-team .b-person { font-size: 0.72rem; color: var(--green); }
+  .bracket-team .b-name { font-weight: 500; font-size: 0.82rem; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bracket-team .b-score { font-weight: 700; font-size: 0.88rem; color: var(--text); min-width: 18px; text-align: right; }
+  .bracket-team .b-person { font-size: 0.66rem; color: var(--green); }
   .bracket-team.winner { background: #f0f9f4; }
   .bracket-team.winner .b-name { font-weight: 700; }
   .bracket-pending .b-name { color: var(--muted); font-style: italic; }
+  .bracket-note { font-size: 0.6rem; color: var(--green); text-transform: uppercase; letter-spacing: 0.3px; text-align: center; padding: 2px 0; background: var(--surface2); }
+  /* Connector lines between rounds */
+  .bracket-col:not(:first-child) .bracket-slot::before {
+    content: ''; position: absolute; left: -28px; width: 28px; height: 1px; background: var(--border);
+  }
+  .bracket-col { position: relative; }
+  .bracket-slot { position: relative; }
 
   @media (max-width: 480px) {
     .team-name { font-size: 0.78rem; }
@@ -147,7 +158,9 @@
 </div>
 
 <div id="bracket" class="page">
-  <div id="bracketContent"></div>
+  <div class="bracket-scroll">
+    <div id="bracketContent" class="bracket-tree"></div>
+  </div>
 </div>
 
 <script>
@@ -347,8 +360,8 @@ const FIXTURES = [
   // Knockout (TBC as tournament progresses)
   { home:"South Africa", away:"Canada", date:"2026-06-28", time:"20:00", group:null, stage:"Round of 32", homeScore:0, awayScore:1 },
   { home:"Brazil", away:"Japan", date:"2026-06-29", time:"18:00", group:null, stage:"Round of 32", homeScore:2, awayScore:1 },
-  { home:"Germany", away:"Paraguay", date:"2026-06-29", time:"21:30", group:null, stage:"Round of 32", homeScore:1, awayScore:1 },
-  { home:"Netherlands", away:"Morocco", date:"2026-06-30", time:"02:00", group:null, stage:"Round of 32", homeScore:1, awayScore:1 },
+  { home:"Germany", away:"Paraguay", date:"2026-06-29", time:"21:30", group:null, stage:"Round of 32", homeScore:1, awayScore:1, note:"Pens (3-4)"  },
+  { home:"Netherlands", away:"Morocco", date:"2026-06-30", time:"02:00", group:null, stage:"Round of 32", homeScore:1, awayScore:1, note:"Pens (2-3)"  },
   { home:"Ivory Coast", away:"Norway", date:"2026-06-30", time:"18:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
   { home:"France", away:"Sweden", date:"2026-06-30", time:"22:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
   { home:"Mexico", away:"Ecuador", date:"2026-07-01", time:"02:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
@@ -410,20 +423,79 @@ const KNOCKED_OUT = [
 // Fill in as each knockout round is played.
 // homeScore / awayScore: null until played.
 // homeWin: true if home team won, false if away won.
+// note (optional): "AET" or "Pens (4-3)" — shows under the score.
 // ════════════════════════════════════════════════
 const BRACKET = {
   r32:   [
+		{ home:"Germany",      away:"Paraguay", homeScore:1, awayScore:1, homeWin:false, note:"Pens (3-4)" },
+		{ home:"France",      away:"Sweden", homeScore:null, awayScore:null, homeWin:null },
+	  
 		{ home:"South Africa",      away:"Canada", homeScore:0, awayScore:1, homeWin:false  },
+		{ home:"Netherlands",      away:"Morocco", homeScore:1, awayScore:1, homeWin:false, note:"Pens (2-3)" },
+	  
+		{ home:"Portugal",      away:"Croatia", homeScore:null, awayScore:null, homeWin:null },
+		{ home:"Spain",      away:"Austria", homeScore:null, awayScore:null, homeWin:null, },
+	  
+		{ home:"USA",      away:"Bosnia", homeScore:null, awayScore:null, homeWin:null },
+		{ home:"Belgium",      away:"Senegal", homeScore:null, awayScore:null, homeWin:null },
+	  
 		{ home:"Brazil",      away:"Japan", homeScore:2, awayScore:1, homeWin:true  },
-		{ home:"Germany",      away:"Paraguay", homeScore:1, awayScore:1, homeWin:false  },
-		{ home:"Netherlands",      away:"Morocco", homeScore:1, awayScore:1, homeWin:false  },
-//  		{ home:"England",  away:"Morocco",     homeScore:0, awayScore:1, homeWin:false },
-//  		{ home:"Brazil",   away:"Canada",      homeScore:null, awayScore:null },
+		{ home:"Ivory Coast",      away:"Norway", homeScore:null, awayScore:null, homeWin:null },
+	  
+		{ home:"Mexico",      away:"Ecuador", homeScore:null, awayScore:null, homeWin:null },
+		{ home:"England",      away:"DR Congo", homeScore:null, awayScore:null, homeWin:null },
+	  
+		{ home:"Argentina",      away:"Cape Verde", homeScore:null, awayScore:null, homeWin:null },
+		{ home:"Australia",      away:"Egypt", homeScore:null, awayScore:null, homeWin:null },
+	  
+		{ home:"Switzerland",      away:"Algeria", homeScore:null, awayScore:null, homeWin:null },
+		{ home:"Colombia",      away:"Ghana", homeScore:null, awayScore:null, homeWin:null },
+//		{ home:"Netherlands",      away:"Morocco", homeScore:1, awayScore:1, homeWin:false, note:"AET" },
   ],
-  r16:   [],
-  qf:    [],
-  sf:    [],
-  final: [],
+	
+	
+  r16:   [
+	  { home:"Paraguay",      away:"W77", homeScore:null, awayScore:null, homeWin:null },
+	  
+	  { home:"Canada",      away:"Morocco", homeScore:null, awayScore:null, homeWin:null },
+	  
+	  { home:"W83",      away:"W84", homeScore:null, awayScore:null, homeWin:null },
+	  
+	  { home:"W81",      away:"W82", homeScore:null, awayScore:null, homeWin:null },
+	  
+	  { home:"Brazil",      away:"W78", homeScore:null, awayScore:null, homeWin:null },
+	  
+	  { home:"W79",      away:"W80", homeScore:null, awayScore:null, homeWin:null },
+	  
+	  { home:"W86",      away:"W88", homeScore:null, awayScore:null, homeWin:null },
+	  
+	  { home:"W85",      away:"W87", homeScore:null, awayScore:null, homeWin:null },
+  ],
+	
+	
+  qf:    [
+	  { home:"W89",      away:"W90", homeScore:null, awayScore:null, homeWin:null },
+	  
+	  { home:"W93",      away:"W94", homeScore:null, awayScore:null, homeWin:null },
+	  
+	  { home:"W91",      away:"W92", homeScore:null, awayScore:null, homeWin:null },
+	  
+	  { home:"W95",      away:"W96", homeScore:null, awayScore:null, homeWin:null },
+  ],
+	
+	
+  sf:    [
+	  { home:"W97",      away:"W98", homeScore:null, awayScore:null, homeWin:null },
+	  
+	  { home:"W99",      away:"W100", homeScore:null, awayScore:null, homeWin:null },
+  ],
+	
+	
+  final: [
+	  { home:"RU101",      away:"RU102", homeScore:null, awayScore:null, homeWin:null },
+	  
+	  { home:"W101",      away:"W102", homeScore:null, awayScore:null, homeWin:null },
+  ],
 };
 
 function flag(name) {
@@ -443,7 +515,11 @@ function renderParticipants(filter = "") {
   const lf = filter.toLowerCase();
   const items = TEAMS.filter(t =>
     !filter || t.name.toLowerCase().includes(lf) || (FULL_DRAW[t.name] || "").toLowerCase().includes(lf)
-  );
+  ).sort((a, b) => {
+    const aKo = KNOCKED_OUT.includes(a.name) ? 1 : 0;
+    const bKo = KNOCKED_OUT.includes(b.name) ? 1 : 0;
+    return aKo - bKo;
+  });
   document.getElementById("participantsGrid").innerHTML = items.map(t => {
     const ko = KNOCKED_OUT.includes(t.name);
     return `
@@ -522,7 +598,7 @@ function fixtureHTML(f) {
     </div>
     <div class="mid">
       ${hasResult
-        ? `<div class="score">${f.homeScore} – ${f.awayScore}</div>`
+        ? `<div class="score">${f.homeScore} – ${f.awayScore}</div>${f.note ? `<div class="match-note">${f.note}</div>` : ''}`
         : `<div class="vs">vs</div>`}
       <div class="fixture-meta">${formatDate(f.date)}, ${f.time}</div>
     </div>
@@ -647,18 +723,30 @@ function renderBracket() {
     el.innerHTML = `<p style="color:var(--muted);margin-top:1rem;font-size:0.9rem;">The knockout bracket will appear here once the group stage is complete.</p>`;
     return;
   }
-  el.innerHTML = Object.keys(BRACKET).map(s => {
-    const matches = BRACKET[s];
-    if (!matches.length) return '';
+
+  // Only render columns up to the furthest round that has matches
+  const order = ['r32', 'r16', 'qf', 'sf', 'final'];
+  const lastIndex = order.reduce((acc, key, i) => BRACKET[key].length ? i : acc, 0);
+  const cols = order.slice(0, lastIndex + 1);
+
+  el.innerHTML = cols.map(key => {
+    const matches = BRACKET[key];
+    // Pad future rounds with TBC placeholders sized to match bracket progression
+    const expectedCount = Math.max(matches.length, Math.ceil((BRACKET[order[order.indexOf(key) - 1]]?.length || matches.length * 2) / 2));
+    const slots = matches.length ? matches : Array.from({ length: expectedCount }, () => ({ home: null, away: null, homeScore: null, awayScore: null }));
+
     return `
-      <div class="bracket-stage-title">${STAGE_LABELS[s]}</div>
-      <div class="bracket-grid">
-        ${matches.map(m => {
+      <div class="bracket-col">
+        <div class="bracket-col-title">${STAGE_LABELS[key]}</div>
+        ${slots.map(m => {
           const played = m.homeScore !== null && m.homeScore !== undefined;
           return `
-          <div class="bracket-fixture">
-            ${bracketTeamHTML(m.home, m.homeScore, played && m.homeWin === true)}
-            ${bracketTeamHTML(m.away, m.awayScore, played && m.homeWin === false)}
+          <div class="bracket-slot">
+            <div class="bracket-fixture">
+              ${bracketTeamHTML(m.home, m.homeScore, played && m.homeWin === true)}
+              ${bracketTeamHTML(m.away, m.awayScore, played && m.homeWin === false)}
+              ${m.note ? `<div class="bracket-note">${m.note}</div>` : ''}
+            </div>
           </div>`;
         }).join('')}
       </div>`;
