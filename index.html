@@ -346,9 +346,9 @@ const FIXTURES = [
 
   // Knockout (TBC as tournament progresses)
   { home:"South Africa", away:"Canada", date:"2026-06-28", time:"20:00", group:null, stage:"Round of 32", homeScore:0, awayScore:1 },
-  { home:"Brazil", away:"Japan", date:"2026-06-29", time:"18:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
-  { home:"Germany", away:"Paraguay", date:"2026-06-29", time:"21:30", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
-  { home:"Netherlands", away:"Morocco", date:"2026-06-30", time:"02:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
+  { home:"Brazil", away:"Japan", date:"2026-06-29", time:"18:00", group:null, stage:"Round of 32", homeScore:2, awayScore:1 },
+  { home:"Germany", away:"Paraguay", date:"2026-06-29", time:"21:30", group:null, stage:"Round of 32", homeScore:1, awayScore:1 },
+  { home:"Netherlands", away:"Morocco", date:"2026-06-30", time:"02:00", group:null, stage:"Round of 32", homeScore:1, awayScore:1 },
   { home:"Ivory Coast", away:"Norway", date:"2026-06-30", time:"18:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
   { home:"France", away:"Sweden", date:"2026-06-30", time:"22:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
   { home:"Mexico", away:"Ecuador", date:"2026-07-01", time:"02:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
@@ -398,7 +398,10 @@ const KNOCKED_OUT = [
 	"Jordan",
 	"Uzbekistan",
 	"Panama",
-	"South Africa"
+	"South Africa",
+	"Japan",
+	"Germany",
+	"Netherlands"
   // e.g. "Qatar",
 ];
 
@@ -411,6 +414,9 @@ const KNOCKED_OUT = [
 const BRACKET = {
   r32:   [
 		{ home:"South Africa",      away:"Canada", homeScore:0, awayScore:1, homeWin:false  },
+		{ home:"Brazil",      away:"Japan", homeScore:2, awayScore:1, homeWin:true  },
+		{ home:"Germany",      away:"Paraguay", homeScore:1, awayScore:1, homeWin:false  },
+		{ home:"Netherlands",      away:"Morocco", homeScore:1, awayScore:1, homeWin:false  },
 //  		{ home:"England",  away:"Morocco",     homeScore:0, awayScore:1, homeWin:false },
 //  		{ home:"Brazil",   away:"Canada",      homeScore:null, awayScore:null },
   ],
