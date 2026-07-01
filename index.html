@@ -362,9 +362,9 @@ const FIXTURES = [
   { home:"Brazil", away:"Japan", date:"2026-06-29", time:"18:00", group:null, stage:"Round of 32", homeScore:2, awayScore:1 },
   { home:"Germany", away:"Paraguay", date:"2026-06-29", time:"21:30", group:null, stage:"Round of 32", homeScore:1, awayScore:1, note:"Pens (3-4)"  },
   { home:"Netherlands", away:"Morocco", date:"2026-06-30", time:"02:00", group:null, stage:"Round of 32", homeScore:1, awayScore:1, note:"Pens (2-3)"  },
-  { home:"Ivory Coast", away:"Norway", date:"2026-06-30", time:"18:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
-  { home:"France", away:"Sweden", date:"2026-06-30", time:"22:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
-  { home:"Mexico", away:"Ecuador", date:"2026-07-01", time:"02:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
+  { home:"Ivory Coast", away:"Norway", date:"2026-06-30", time:"18:00", group:null, stage:"Round of 32", homeScore:1, awayScore:2 },
+  { home:"France", away:"Sweden", date:"2026-06-30", time:"22:00", group:null, stage:"Round of 32", homeScore:3, awayScore:0 },
+  { home:"Mexico", away:"Ecuador", date:"2026-07-01", time:"02:00", group:null, stage:"Round of 32", homeScore:2, awayScore:0 },
   { home:"England", away:"DR Congo", date:"2026-07-01", time:"17:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
   { home:"Belgium", away:"Senegal", date:"2026-07-01", time:"21:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
   { home:"USA", away:"Bosnia", date:"2026-07-02", time:"01:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
@@ -414,7 +414,10 @@ const KNOCKED_OUT = [
 	"South Africa",
 	"Japan",
 	"Germany",
-	"Netherlands"
+	"Netherlands",
+	"Ivory Coast",
+	"Sweden",
+	"Ecuador"
   // e.g. "Qatar",
 ];
 
@@ -428,7 +431,7 @@ const KNOCKED_OUT = [
 const BRACKET = {
   r32:   [
 		{ home:"Germany",      away:"Paraguay", homeScore:1, awayScore:1, homeWin:false, note:"Pens (3-4)" },
-		{ home:"France",      away:"Sweden", homeScore:null, awayScore:null, homeWin:null },
+		{ home:"France",      away:"Sweden", homeScore:3, awayScore:0, homeWin:true },
 	  
 		{ home:"South Africa",      away:"Canada", homeScore:0, awayScore:1, homeWin:false  },
 		{ home:"Netherlands",      away:"Morocco", homeScore:1, awayScore:1, homeWin:false, note:"Pens (2-3)" },
@@ -440,9 +443,9 @@ const BRACKET = {
 		{ home:"Belgium",      away:"Senegal", homeScore:null, awayScore:null, homeWin:null },
 	  
 		{ home:"Brazil",      away:"Japan", homeScore:2, awayScore:1, homeWin:true  },
-		{ home:"Ivory Coast",      away:"Norway", homeScore:null, awayScore:null, homeWin:null },
+		{ home:"Ivory Coast",      away:"Norway", homeScore:1, awayScore:2, homeWin:false },
 	  
-		{ home:"Mexico",      away:"Ecuador", homeScore:null, awayScore:null, homeWin:null },
+		{ home:"Mexico",      away:"Ecuador", homeScore:2, awayScore:0, homeWin:true },
 		{ home:"England",      away:"DR Congo", homeScore:null, awayScore:null, homeWin:null },
 	  
 		{ home:"Argentina",      away:"Cape Verde", homeScore:null, awayScore:null, homeWin:null },
@@ -455,7 +458,7 @@ const BRACKET = {
 	
 	
   r16:   [
-	  { home:"Paraguay",      away:"W77", homeScore:null, awayScore:null, homeWin:null },
+	  { home:"Paraguay",      away:"France", homeScore:null, awayScore:null, homeWin:null },
 	  
 	  { home:"Canada",      away:"Morocco", homeScore:null, awayScore:null, homeWin:null },
 	  
@@ -463,9 +466,9 @@ const BRACKET = {
 	  
 	  { home:"W81",      away:"W82", homeScore:null, awayScore:null, homeWin:null },
 	  
-	  { home:"Brazil",      away:"W78", homeScore:null, awayScore:null, homeWin:null },
+	  { home:"Brazil",      away:"Norway", homeScore:null, awayScore:null, homeWin:null },
 	  
-	  { home:"W79",      away:"W80", homeScore:null, awayScore:null, homeWin:null },
+	  { home:"Mexico",      away:"W80", homeScore:null, awayScore:null, homeWin:null },
 	  
 	  { home:"W86",      away:"W88", homeScore:null, awayScore:null, homeWin:null },
 	  
