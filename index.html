@@ -356,6 +356,8 @@ const FIXTURES = [
   { home:"Panama",             away:"Croatia",            date:"2026-06-24", time:"00:00", group:"L", stage:"Group Stage", homeScore:0, awayScore:1 },
   { home:"Panama",             away:"England",            date:"2026-06-27", time:"22:00", group:"L", stage:"Group Stage", homeScore:0, awayScore:2 },
   { home:"Croatia",            away:"Ghana",              date:"2026-06-27", time:"22:00", group:"L", stage:"Group Stage", homeScore:2, awayScore:1 },
+	
+	
 
   // Knockout (TBC as tournament progresses)
   { home:"South Africa", away:"Canada", date:"2026-06-28", time:"20:00", group:null, stage:"Round of 32", homeScore:0, awayScore:1 },
@@ -365,9 +367,9 @@ const FIXTURES = [
   { home:"Ivory Coast", away:"Norway", date:"2026-06-30", time:"18:00", group:null, stage:"Round of 32", homeScore:1, awayScore:2 },
   { home:"France", away:"Sweden", date:"2026-06-30", time:"22:00", group:null, stage:"Round of 32", homeScore:3, awayScore:0 },
   { home:"Mexico", away:"Ecuador", date:"2026-07-01", time:"02:00", group:null, stage:"Round of 32", homeScore:2, awayScore:0 },
-  { home:"England", away:"DR Congo", date:"2026-07-01", time:"17:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
-  { home:"Belgium", away:"Senegal", date:"2026-07-01", time:"21:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
-  { home:"USA", away:"Bosnia-Herzegovina", date:"2026-07-02", time:"01:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
+  { home:"England", away:"DR Congo", date:"2026-07-01", time:"17:00", group:null, stage:"Round of 32", homeScore:2, awayScore:1 },
+  { home:"Belgium", away:"Senegal", date:"2026-07-01", time:"21:00", group:null, stage:"Round of 32", homeScore:3, awayScore:2, note:"AET" },
+  { home:"USA", away:"Bosnia-Herzegovina", date:"2026-07-02", time:"01:00", group:null, stage:"Round of 32", homeScore:2, awayScore:0 },
   { home:"Spain", away:"Austria", date:"2026-07-02", time:"20:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
   { home:"Portugal", away:"Croatia", date:"2026-07-03", time:"00:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
   { home:"Switzerland", away:"Algeria", date:"2026-07-03", time:"04:00", group:null, stage:"Round of 32", homeScore:null, awayScore:null },
@@ -377,7 +379,18 @@ const FIXTURES = [
 	
 	
 	
-  { home:"TBC", away:"TBC", date:"2026-07-11", time:"TBC", group:null, stage:"Round of 16", homeScore:null, awayScore:null },
+	//R16
+  { home:"Canada", away:"Morocco", date:"2026-07-04", time:"18:00", group:null, stage:"Round of 16", homeScore:null, awayScore:null },
+  { home:"Paraguay", away:"France", date:"2026-07-04", time:"22:00", group:null, stage:"Round of 16", homeScore:null, awayScore:null },
+  { home:"Brazil", away:"Norway", date:"2026-07-05", time:"21:00", group:null, stage:"Round of 16", homeScore:null, awayScore:null },
+  { home:"Mexico", away:"England", date:"2026-07-06", time:"01:00", group:null, stage:"Round of 16", homeScore:null, awayScore:null },
+  { home:"W83", away:"W84", date:"2026-07-06", time:"20:00", group:null, stage:"Round of 16", homeScore:null, awayScore:null },
+  { home:"USA", away:"Belgium", date:"2026-07-07", time:"01:00", group:null, stage:"Round of 16", homeScore:null, awayScore:null },
+  { home:"W86", away:"W88", date:"2026-07-07", time:"17:00", group:null, stage:"Round of 16", homeScore:null, awayScore:null },
+  { home:"W85", away:"W87", date:"2026-07-07", time:"21:00", group:null, stage:"Round of 16", homeScore:null, awayScore:null },
+	
+	
+	
   { home:"TBC", away:"TBC", date:"2026-07-14", time:"TBC", group:null, stage:"Quarter-finals", homeScore:null, awayScore:null },
   { home:"TBC", away:"TBC", date:"2026-07-17", time:"TBC", group:null, stage:"Semi-finals", homeScore:null, awayScore:null },
   { home:"TBC", away:"TBC", date:"2026-07-19", time:"TBC", group:null, stage:"Final", homeScore:null, awayScore:null },
@@ -417,7 +430,10 @@ const KNOCKED_OUT = [
 	"Netherlands",
 	"Ivory Coast",
 	"Sweden",
-	"Ecuador"
+	"Ecuador",
+	"DR Congo",
+	"Senegal",
+	"Bosnia-Herzegovina"
   // e.g. "Qatar",
 ];
 
@@ -439,14 +455,14 @@ const BRACKET = {
 		{ home:"Portugal",      away:"Croatia", homeScore:null, awayScore:null, homeWin:null },
 		{ home:"Spain",      away:"Austria", homeScore:null, awayScore:null, homeWin:null, },
 	  
-		{ home:"USA",      away:"Bosnia-Herzegovina", homeScore:null, awayScore:null, homeWin:null },
-		{ home:"Belgium",      away:"Senegal", homeScore:null, awayScore:null, homeWin:null },
+		{ home:"USA",      away:"Bosnia-Herzegovina", homeScore:2, awayScore:0, homeWin:true },
+		{ home:"Belgium",      away:"Senegal", homeScore:3, awayScore:2, homeWin:true, note:"AET" },
 	  
 		{ home:"Brazil",      away:"Japan", homeScore:2, awayScore:1, homeWin:true  },
 		{ home:"Ivory Coast",      away:"Norway", homeScore:1, awayScore:2, homeWin:false },
 	  
 		{ home:"Mexico",      away:"Ecuador", homeScore:2, awayScore:0, homeWin:true },
-		{ home:"England",      away:"DR Congo", homeScore:null, awayScore:null, homeWin:null },
+		{ home:"England",      away:"DR Congo", homeScore:2, awayScore:1, homeWin:true },
 	  
 		{ home:"Argentina",      away:"Cape Verde", homeScore:null, awayScore:null, homeWin:null },
 		{ home:"Australia",      away:"Egypt", homeScore:null, awayScore:null, homeWin:null },
@@ -464,11 +480,11 @@ const BRACKET = {
 	  
 	  { home:"W83",      away:"W84", homeScore:null, awayScore:null, homeWin:null },
 	  
-	  { home:"W81",      away:"W82", homeScore:null, awayScore:null, homeWin:null },
+	  { home:"USA",      away:"Belgium", homeScore:null, awayScore:null, homeWin:null },
 	  
 	  { home:"Brazil",      away:"Norway", homeScore:null, awayScore:null, homeWin:null },
 	  
-	  { home:"Mexico",      away:"W80", homeScore:null, awayScore:null, homeWin:null },
+	  { home:"Mexico",      away:"England", homeScore:null, awayScore:null, homeWin:null },
 	  
 	  { home:"W86",      away:"W88", homeScore:null, awayScore:null, homeWin:null },
 	  
