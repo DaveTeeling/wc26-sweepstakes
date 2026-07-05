@@ -380,8 +380,8 @@ const FIXTURES = [
 	
 	
 	//R16
-  { home:"Canada", away:"Morocco", date:"2026-07-04", time:"18:00", group:null, stage:"Round of 16", homeScore:null, awayScore:null },
-  { home:"Paraguay", away:"France", date:"2026-07-04", time:"22:00", group:null, stage:"Round of 16", homeScore:null, awayScore:null },
+  { home:"Canada", away:"Morocco", date:"2026-07-04", time:"18:00", group:null, stage:"Round of 16", homeScore:0, awayScore:3 },
+  { home:"Paraguay", away:"France", date:"2026-07-04", time:"22:00", group:null, stage:"Round of 16", homeScore:0, awayScore:1 },
   { home:"Brazil", away:"Norway", date:"2026-07-05", time:"21:00", group:null, stage:"Round of 16", homeScore:null, awayScore:null },
   { home:"Mexico", away:"England", date:"2026-07-06", time:"01:00", group:null, stage:"Round of 16", homeScore:null, awayScore:null },
   { home:"Portugal", away:"Spain", date:"2026-07-06", time:"20:00", group:null, stage:"Round of 16", homeScore:null, awayScore:null },
@@ -391,7 +391,7 @@ const FIXTURES = [
 	
 	
 	
-  { home:"W89", away:"W90", date:"2026-07-09", time:"21:00", group:null, stage:"Quarter-finals", homeScore:null, awayScore:null },
+  { home:"France", away:"Morocco", date:"2026-07-09", time:"21:00", group:null, stage:"Quarter-finals", homeScore:null, awayScore:null },
   { home:"W93", away:"W94", date:"2026-07-10", time:"20:00", group:null, stage:"Quarter-finals", homeScore:null, awayScore:null },
   { home:"W91", away:"W92", date:"2026-07-11", time:"22:00", group:null, stage:"Quarter-finals", homeScore:null, awayScore:null },
   { home:"W95", away:"W96", date:"2026-07-12", time:"02:00", group:null, stage:"Quarter-finals", homeScore:null, awayScore:null },
@@ -450,7 +450,9 @@ const KNOCKED_OUT = [
 	"Algeria",
 	"Australia",
 	"Cape Verde",
-	"Ghana"
+	"Ghana",
+	"Canada",
+	"Paraguay"
   // e.g. "Qatar",
 ];
 
@@ -491,9 +493,9 @@ const BRACKET = {
 	
 	
   r16:   [
-	  { home:"Paraguay",      away:"France", homeScore:null, awayScore:null, homeWin:null },
+	  { home:"Paraguay",      away:"France", homeScore:0, awayScore:1, homeWin:true },
 	  
-	  { home:"Canada",      away:"Morocco", homeScore:null, awayScore:null, homeWin:null },
+	  { home:"Canada",      away:"Morocco", homeScore:0, awayScore:3, homeWin:true },
 	  
 	  { home:"Portugal",      away:"Spain", homeScore:null, awayScore:null, homeWin:null },
 	  
@@ -510,7 +512,7 @@ const BRACKET = {
 	
 	
   qf:    [
-	  { home:"W89",      away:"W90", homeScore:null, awayScore:null, homeWin:null },
+	  { home:"France",      away:"Morocco", homeScore:null, awayScore:null, homeWin:null },
 	  
 	  { home:"W93",      away:"W94", homeScore:null, awayScore:null, homeWin:null },
 	  
