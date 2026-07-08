@@ -386,15 +386,15 @@ const FIXTURES = [
   { home:"Mexico", away:"England", date:"2026-07-06", time:"01:00", group:null, stage:"Round of 16", homeScore:2, awayScore:3 },
   { home:"Portugal", away:"Spain", date:"2026-07-06", time:"20:00", group:null, stage:"Round of 16", homeScore:0, awayScore:1 },
   { home:"USA", away:"Belgium", date:"2026-07-07", time:"01:00", group:null, stage:"Round of 16", homeScore:1, awayScore:4 },
-  { home:"Argentina", away:"Egypt", date:"2026-07-07", time:"17:00", group:null, stage:"Round of 16", homeScore:null, awayScore:null },
-  { home:"Switzerland", away:"Colombia", date:"2026-07-07", time:"21:00", group:null, stage:"Round of 16", homeScore:null, awayScore:null },
+  { home:"Argentina", away:"Egypt", date:"2026-07-07", time:"17:00", group:null, stage:"Round of 16", homeScore:3, awayScore:2 },
+  { home:"Switzerland", away:"Colombia", date:"2026-07-07", time:"21:00", group:null, stage:"Round of 16", homeScore:0, awayScore:0, note:"Pens (4-3)" },
 	
 	
 	
   { home:"France", away:"Morocco", date:"2026-07-09", time:"21:00", group:null, stage:"Quarter-finals", homeScore:null, awayScore:null },
   { home:"Spain", away:"Belgium", date:"2026-07-10", time:"20:00", group:null, stage:"Quarter-finals", homeScore:null, awayScore:null },
   { home:"Norway", away:"England", date:"2026-07-11", time:"22:00", group:null, stage:"Quarter-finals", homeScore:null, awayScore:null },
-  { home:"W95", away:"W96", date:"2026-07-12", time:"02:00", group:null, stage:"Quarter-finals", homeScore:null, awayScore:null },
+  { home:"Argentina", away:"Switzerland", date:"2026-07-12", time:"02:00", group:null, stage:"Quarter-finals", homeScore:null, awayScore:null },
 	
 	
 	
@@ -456,7 +456,9 @@ const KNOCKED_OUT = [
 	"Brazil",
 	"Mexico",
 	"Portugal",
-	"USA"
+	"USA",
+	"Egypt",
+	"Colombia"
   // e.g. "Qatar",
 ];
 
@@ -509,9 +511,9 @@ const BRACKET = {
 	  
 	  { home:"Mexico",      away:"England", homeScore:2, awayScore:3, homeWin:false },
 	  
-	  { home:"Argentina",      away:"Egypt", homeScore:null, awayScore:null, homeWin:null },
+	  { home:"Argentina",      away:"Egypt", homeScore:3, awayScore:2, homeWin:true },
 	  
-	  { home:"Switzerland",      away:"Colombia", homeScore:null, awayScore:null, homeWin:null },
+	  { home:"Switzerland",      away:"Colombia", homeScore:0, awayScore:0, homeWin:true, note:"Pens (4-3)" },
   ],
 	
 	
@@ -522,7 +524,7 @@ const BRACKET = {
 	  
 	  { home:"Norway",      away:"England", homeScore:null, awayScore:null, homeWin:null },
 	  
-	  { home:"W95",      away:"W96", homeScore:null, awayScore:null, homeWin:null },
+	  { home:"Argentina",      away:"Switzerland", homeScore:null, awayScore:null, homeWin:null },
   ],
 	
 	
@@ -585,7 +587,7 @@ function filterParticipants() { renderParticipants(document.getElementById("part
 // RENDER — FIXTURES
 // ════════════════════════════════════════════════
 const STAGES = ["All","Group Stage","Round of 32","Round of 16","Quarter-finals","Semi-finals","Final"];
-let activeStage = "Round of 16";
+let activeStage = "Quarter-finals";
 let activeDate = "All";
 
 function renderStageFilter() {
