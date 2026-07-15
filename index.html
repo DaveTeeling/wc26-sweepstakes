@@ -399,12 +399,12 @@ const FIXTURES = [
 	
 	
   { home:"France", away:"Spain", date:"2026-07-14", time:"20:00", group:null, stage:"Semi-finals", homeScore:0, awayScore:2 },
-  { home:"England", away:"Argentina", date:"2026-07-15", time:"20:00", group:null, stage:"Semi-finals", homeScore:null, awayScore:null },
+  { home:"England", away:"Argentina", date:"2026-07-15", time:"20:00", group:null, stage:"Semi-finals", homeScore:1, awayScore:2 },
 	
 	
 	
-  { home:"France", away:"RU102", date:"2026-07-18", time:"22:00", group:null, stage:"Final", homeScore:null, awayScore:null },
-  { home:"Spain", away:"W102", date:"2026-07-19", time:"20:00", group:null, stage:"Final", homeScore:null, awayScore:null },
+  { home:"France", away:"England", date:"2026-07-18", time:"22:00", group:null, stage:"Final", homeScore:null, awayScore:null },
+  { home:"Spain", away:"Argentina", date:"2026-07-19", time:"20:00", group:null, stage:"Final", homeScore:null, awayScore:null },
 ];
 
 // ════════════════════════════════════════════════
@@ -463,7 +463,8 @@ const KNOCKED_OUT = [
 	"Norway",
 	"Switzerland",
 	"Belgium",
-	"France"
+	"France",
+	"England"
   // e.g. "Qatar",
 ];
 
@@ -536,17 +537,17 @@ const BRACKET = {
   sf:    [
 	  { home:"France",      away:"Spain", homeScore:0, awayScore:2, homeWin:false },
 	  
-	  { home:"England",      away:"Argentina", homeScore:null, awayScore:null, homeWin:null },
+	  { home:"England",      away:"Argentina", homeScore:1, awayScore:2, homeWin:false },
   ],
 	
 	
   third: [
-	  { home:"France",      away:"RU102", homeScore:null, awayScore:null, homeWin:null },
+	  { home:"France",      away:"England", homeScore:null, awayScore:null, homeWin:null },
   ],
 	
 	
   final: [	  
-	  { home:"Spain",      away:"W102", homeScore:null, awayScore:null, homeWin:null },
+	  { home:"Spain",      away:"Argentina", homeScore:null, awayScore:null, homeWin:null },
   ],
 };
 
